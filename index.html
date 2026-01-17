@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT Dashboard Manager (GitHub)</title>
+  <title>IT Dashboard Manager (Role Based)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
@@ -34,16 +34,13 @@
  <body class="h-full">
   <div id="app" class="w-full h-full overflow-auto" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);">
     
-   <!-- URL Configuration Modal (Shows if URL is missing) -->
+   <!-- URL Configuration Modal -->
    <div id="config-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-6 modal-backdrop" style="background: rgba(0,0,0,0.8); display: none;">
      <div class="w-full max-w-lg rounded-2xl p-8 bg-white shadow-2xl">
        <h2 class="text-2xl font-bold mb-4 text-slate-800">ตั้งค่าการเชื่อมต่อ</h2>
-       <p class="text-slate-600 mb-4">กรุณากรอก URL ของ Google Apps Script Web App เพื่อเริ่มต้นใช้งาน</p>
+       <p class="text-slate-600 mb-4">กรุณากรอก URL ของ Google Apps Script Web App</p>
        <div class="bg-blue-50 p-4 rounded-xl mb-4 text-sm text-blue-700">
-         <strong>วิธีหา URL:</strong><br>
-         1. ไปที่ Google Apps Script ของคุณ<br>
-         2. กดปุ่ม "ทำให้ใช้งานได้" (Deploy) > "แอปพลิเคชันเว็บ" (Web app)<br>
-         3. คัดลอก URL ที่ลงท้ายด้วย <code>/exec</code>
+         <strong>หมายเหตุ:</strong> ต้องมั่นใจว่า Google Sheet ของคุณมีคอลัมน์ <code>role</code> แล้ว และอัปเดต Code.gs แล้ว
        </div>
        <input type="text" id="script-url-input" class="w-full px-4 py-3 rounded-xl border-2 mb-4" placeholder="https://script.google.com/macros/s/..." value="">
        <button onclick="saveConfig()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">บันทึกและเริ่มใช้งาน</button>
@@ -60,7 +57,7 @@
         <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
        </div>
        <h2 class="text-3xl font-bold mb-2" style="color: #1e293b;">เข้าสู่ระบบ</h2>
-       <p class="text-sm" style="color: #64748b;">IT Dashboard (GitHub Hosted)</p>
+       <p class="text-sm" style="color: #64748b;">IT Dashboard</p>
       </div>
       <form id="login-form">
        <div class="mb-6"><label for="login-username" class="block text-sm font-semibold mb-3" style="color: #475569;">ชื่อผู้ใช้</label> <input type="text" id="login-username" required class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none transition-colors" style="border-color: #e2e8f0; background: #f8fafc;" placeholder="กรอกชื่อผู้ใช้"></div>
@@ -69,6 +66,7 @@
        </div><button type="submit" id="login-btn" class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);"> <span id="login-text">เข้าสู่ระบบ</span> </button> <button type="button" id="show-register-btn" class="w-full px-6 py-3 rounded-xl font-medium transition-colors" style="background: #f1f5f9; color: #64748b;"> ลงทะเบียนผู้ใช้ใหม่ </button>
       </form>
      </div>
+     
      <!-- Register Card -->
      <div id="register-card" class="rounded-3xl p-10 fade-in" style="background: rgba(255, 255, 255, 0.95); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); display: none;">
       <div class="text-center mb-8">
@@ -76,7 +74,6 @@
         <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
        </div>
        <h2 class="text-3xl font-bold mb-2" style="color: #1e293b;">ลงทะเบียน</h2>
-       <p class="text-sm" style="color: #64748b;">สร้างบัญชีผู้ใช้ใหม่</p>
       </div>
       <form id="register-form">
        <div class="mb-6"><label for="register-username" class="block text-sm font-semibold mb-3" style="color: #475569;">ชื่อผู้ใช้</label> <input type="text" id="register-username" required class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none transition-colors" style="border-color: #e2e8f0; background: #f8fafc;" placeholder="กรอกชื่อผู้ใช้"></div>
@@ -84,7 +81,7 @@
         <div class="flex gap-3 justify-center mb-4"><input type="password" maxlength="1" class="pin-input-register" data-index="0" inputmode="numeric" pattern="[0-9]"> <input type="password" maxlength="1" class="pin-input-register" data-index="1" inputmode="numeric" pattern="[0-9]"> <input type="password" maxlength="1" class="pin-input-register" data-index="2" inputmode="numeric" pattern="[0-9]"> <input type="password" maxlength="1" class="pin-input-register" data-index="3" inputmode="numeric" pattern="[0-9]"></div>
        </div>
        
-       <!-- Role Selection -->
+       <!-- Role Selection (Direct Mapping) -->
        <div class="mb-6">
         <label for="register-role" class="block text-sm font-semibold mb-3" style="color: #475569;">ระดับผู้ใช้งาน</label>
         <select id="register-role" class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none transition-colors" style="border-color: #e2e8f0; background: #f8fafc;">
@@ -99,9 +96,8 @@
     </div>
    </div>
 
-   <!-- Main Dashboard (Hidden by default) -->
+   <!-- Main Dashboard -->
    <div id="dashboard-screen" style="display: none;">
-    <!-- Header -->
     <header class="sticky top-0 z-40" style="background: rgba(30, 58, 138, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
      <div class="max-w-7xl mx-auto px-6 py-5">
       <div class="flex items-center justify-between">
@@ -122,7 +118,6 @@
      </div>
     </header>
     
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-6 py-8">
      <div id="loading-indicator" class="hidden text-center py-4 text-white">
         <div class="spinner mx-auto mb-2"></div>
@@ -219,11 +214,10 @@
   
   <script>
     // ============================================
-    // CONFIGURATION (สำหรับ GitHub Pages)
+    // CONFIGURATION
     // ============================================
-    // หากต้องการฝัง URL ลงไปในโค้ดเลย ให้ใส่ที่นี่ (ผู้ใช้จะไม่ต้องกรอกเอง)
-    let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Qyh5DgGFa1-2ntTTASWnCHAfLoRvKs3-k5ZWM-drHHMK9YCZsFdCgNZRaZzk3HE/exec';
-    // let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyC6Ntc8E8WQKNtd7IbrnMTGM010B_arLeJTlxJ6b2qePP11umVPZxqCU8b_q0QM6nE/exec'; 
+    // ใส่ URL ที่นี่ หรือปล่อยว่างไว้เพื่อกรอกผ่านหน้าเว็บ
+    let GOOGLE_SCRIPT_URL = ''; 
     // ============================================
 
     let allData = [];
@@ -234,13 +228,11 @@
     let isLoading = false;
     let currentUser = null;
 
-    // Load Config from LocalStorage
     const storedUrl = localStorage.getItem('it_dashboard_script_url');
     if (storedUrl && !GOOGLE_SCRIPT_URL) {
         GOOGLE_SCRIPT_URL = storedUrl;
     }
 
-    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         setupPinInputs();
         if (!GOOGLE_SCRIPT_URL) {
@@ -262,7 +254,6 @@
         }
     }
 
-    // Data Fetching Service
     async function fetchData() {
         try {
             document.getElementById('loading-indicator').classList.remove('hidden');
@@ -277,8 +268,6 @@
             }
         } catch (error) {
             console.error('Error fetching data:', error);
-            showToast('ไม่สามารถเชื่อมต่อ Google Sheet ได้', 'error');
-            // หากเกิดข้อผิดพลาด ให้เปิดหน้า config เผื่อ URL ผิด
             if(!currentUser) {
                 document.getElementById('config-modal').style.display = 'flex';
             }
@@ -289,8 +278,6 @@
 
     async function submitData(action, data) {
         try {
-            // ส่งแบบ Simple Request (ไม่ระบุ Content-Type เป็น application/json)
-            // เพื่อหลีกเลี่ยง CORS Preflight บน GitHub Pages
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({ action, data })
@@ -308,7 +295,6 @@
         renderSystems();
     }
 
-    // PIN Input Setup
     function setupPinInputs() {
       const loginPins = document.querySelectorAll('.pin-input');
       const registerPins = document.querySelectorAll('.pin-input-register');
@@ -351,7 +337,7 @@
       document.querySelectorAll(`.${className}`).forEach(input => input.value = '');
     }
 
-    // Login Form Handler
+    // Login Handler: Reads 'role' from DB
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (isLoading) return;
@@ -371,18 +357,18 @@
         return;
       }
 
-      await fetchData(); // Fetch fresh data
+      await fetchData();
 
       const user = allData.find(item => item.type === 'user' && item.username === username && item.pin == pin);
 
       isLoading = false; loginBtn.disabled = false; loginText.textContent = 'เข้าสู่ระบบ';
 
       if (user) {
-        // ใช้ user.description เพื่อเก็บ role (ถ้าไม่มีให้เป็น employee)
+        // --- KEY CHANGE: Read from user.role directly ---
         currentUser = { 
             user_id: user.__backendId, 
             username: user.username,
-            role: user.description || 'employee' 
+            role: user.role || 'employee' // Default to employee if empty
         };
         showDashboard();
         showToast('เข้าสู่ระบบสำเร็จ (' + (currentUser.role === 'admin' ? 'ผู้ดูแลระบบ' : 'พนักงาน') + ')', 'success');
@@ -392,7 +378,7 @@
       }
     });
 
-    // Register Form Handler
+    // Register Handler: Sends 'role' to DB
     document.getElementById('register-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (isLoading) return;
@@ -405,7 +391,7 @@
 
       const username = document.getElementById('register-username').value.trim();
       const pin = getPinValue('pin-input-register');
-      const role = document.getElementById('register-role').value; // Get selected role
+      const role = document.getElementById('register-role').value; // Get role
 
       if (pin.length !== 4) {
         showToast('กรุณากรอกรหัส PIN 4 หลัก', 'error');
@@ -422,11 +408,12 @@
         return;
       }
 
+      // --- KEY CHANGE: Send role in the 'role' field ---
       const result = await submitData('create', {
         type: 'user',
         username: username,
         pin: pin,
-        description: role // บันทึก role ลงในช่อง description
+        role: role 
       });
 
       isLoading = false; registerBtn.disabled = false; registerText.textContent = 'ลงทะเบียน';
@@ -442,7 +429,6 @@
       }
     });
 
-    // Show/Hide Forms
     document.getElementById('show-register-btn').addEventListener('click', () => {
       document.getElementById('login-card').style.display = 'none';
       document.getElementById('register-card').style.display = 'block';
@@ -459,7 +445,6 @@
       document.getElementById('dashboard-screen').style.display = 'block';
       document.getElementById('current-username').textContent = currentUser.username;
       
-      // Show Role Badge
       const roleBadge = document.getElementById('current-role-badge');
       if (currentUser.role === 'admin') {
           roleBadge.textContent = 'Admin';
@@ -472,7 +457,6 @@
       refreshDashboard();
     }
 
-    // Logout
     document.getElementById('logout-btn').addEventListener('click', () => {
       currentUser = null;
       allSystems = [];
@@ -483,7 +467,6 @@
       showToast('ออกจากระบบสำเร็จ', 'success');
     });
 
-    // Update Statistics
     function updateStats() {
       const total = allSystems.length;
       const active = allSystems.filter(s => s.status === 'active').length;
@@ -495,7 +478,6 @@
       document.getElementById('offline-count').textContent = offline;
     }
 
-    // Render Systems
     function renderSystems() {
       const grid = document.getElementById('systems-grid');
       const emptyState = document.getElementById('empty-state');
@@ -514,12 +496,11 @@
         Network: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
         Server: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01',
         Database: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
-        Application: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z',
+        Application: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z',
         Security: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
         Other: 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01'
       };
 
-      // เช็คสิทธิ์ Admin
       const isDeleteEnabled = currentUser.role === 'admin';
 
       grid.innerHTML = filteredSystems.map(system => {
@@ -550,28 +531,22 @@
               <button class="edit-btn px-4 py-2.5 rounded-xl transition-colors" data-id="${system.__backendId}" style="background: #f1f5f9; color: #64748b;">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
               </button>
-              
-              <!-- Conditional Delete Button -->
               ${isDeleteEnabled ? `
               <button class="delete-btn px-4 py-2.5 rounded-xl transition-colors" data-id="${system.__backendId}" style="background: #fee2e2; color: #ef4444;">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
               </button>
               ` : ''}
-
             </div>
           </div>
         `;
       }).join('');
 
       document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', () => handleEdit(btn.dataset.id)));
-      
-      // Add event listeners for delete only if they exist
       if (isDeleteEnabled) {
         document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', () => handleDeleteClick(btn.dataset.id)));
       }
     }
 
-    // Handle Filter
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         currentFilter = btn.dataset.filter;
@@ -583,7 +558,6 @@
       });
     });
 
-    // Modal Controls
     function showModal(editing = false) {
       const modal = document.getElementById('modal');
       const modalTitle = document.getElementById('modal-title');
@@ -598,11 +572,9 @@
     function showDeleteModal() { document.getElementById('delete-modal').style.display = 'flex'; }
     function hideDeleteModal() { document.getElementById('delete-modal').style.display = 'none'; deletingSystem = null; }
 
-    // Handle Add
     document.getElementById('add-system-btn').addEventListener('click', () => showModal(false));
     document.getElementById('empty-add-btn').addEventListener('click', () => showModal(false));
 
-    // Handle Edit
     function handleEdit(id) {
       editingSystem = allSystems.find(s => s.__backendId === id);
       if (!editingSystem) return;
@@ -614,9 +586,7 @@
       showModal(true);
     }
 
-    // Handle Delete Click
     function handleDeleteClick(id) {
-      // Security Check: Only Admin can delete
       if(currentUser.role !== 'admin') {
           showToast('คุณไม่มีสิทธิ์ลบข้อมูล', 'error');
           return;
@@ -626,7 +596,6 @@
       showDeleteModal();
     }
 
-    // Handle Form Submit
     document.getElementById('system-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (isLoading) return;
@@ -659,18 +628,15 @@
       if (result.status === 'success') {
         hideModal();
         showToast(editingSystem ? 'แก้ไขระบบสำเร็จ' : 'เพิ่มระบบสำเร็จ', 'success');
-        // Refresh
         await fetchData();
       } else {
         showToast('เกิดข้อผิดพลาด: ' + result.message, 'error');
       }
     });
 
-    // Handle Delete Confirm
     document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
       if (!deletingSystem || isLoading) return;
       
-      // Double check Role
       if(currentUser.role !== 'admin') {
           showToast('คุณไม่มีสิทธิ์ลบข้อมูล', 'error');
           hideDeleteModal();
@@ -696,12 +662,10 @@
       }
     });
 
-    // Modal Close Handlers
     document.getElementById('close-modal').addEventListener('click', hideModal);
     document.getElementById('cancel-btn').addEventListener('click', hideModal);
     document.getElementById('cancel-delete-btn').addEventListener('click', hideDeleteModal);
 
-    // Toast Notification
     function showToast(message, type = 'success') {
       const toast = document.createElement('div');
       const bgColor = type === 'success' ? '#10b981' : '#ef4444';
