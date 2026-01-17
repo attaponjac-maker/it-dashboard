@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT Dashboard Manager (Role Based)</title>
+  <title>IT Dashboard Manager </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
@@ -63,19 +63,20 @@
        <div class="mb-6"><label for="login-username" class="block text-sm font-semibold mb-3" style="color: #475569;">ชื่อผู้ใช้</label> <input type="text" id="login-username" required class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none transition-colors" style="border-color: #e2e8f0; background: #f8fafc;" placeholder="กรอกชื่อผู้ใช้"></div>
        <div class="mb-6"><label class="block text-sm font-semibold mb-3" style="color: #475569;">รหัส PIN (4 หลัก)</label>
         <div class="flex gap-3 justify-center mb-4"><input type="password" maxlength="1" class="pin-input" data-index="0" inputmode="numeric" pattern="[0-9]"> <input type="password" maxlength="1" class="pin-input" data-index="1" inputmode="numeric" pattern="[0-9]"> <input type="password" maxlength="1" class="pin-input" data-index="2" inputmode="numeric" pattern="[0-9]"> <input type="password" maxlength="1" class="pin-input" data-index="3" inputmode="numeric" pattern="[0-9]"></div>
-       </div><button type="submit" id="login-btn" class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);"> <span id="login-text">เข้าสู่ระบบ</span> </button> <button type="button" id="show-register-btn" class="w-full px-6 py-3 rounded-xl font-medium transition-colors" style="background: #f1f5f9; color: #64748b;"> ลงทะเบียนผู้ใช้ใหม่ </button>
+       </div><button type="submit" id="login-btn" class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);"> <span id="login-text">เข้าสู่ระบบ</span> </button> 
+       <button type="button" id="show-register-btn" class="w-full px-6 py-3 rounded-xl font-medium transition-colors" style="background: #f1f5f9; color: #64748b;"> J-attapon <br> Dev.</button>
       </form>
      </div>
      
      <!-- Register Card -->
-     <div id="register-card" class="rounded-3xl p-10 fade-in" style="background: rgba(255, 255, 255, 0.95); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); display: none;">
+     <!--div id="register-card" class="rounded-3xl p-10 fade-in" style="background: rgba(255, 255, 255, 0.95); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); display: none;">
       <div class="text-center mb-8">
        <div class="w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
         <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
       <a href="   
       </div>
        <h2 class="text-3xl font-bold mb-2" style="color: #1e293b;">ลงทะเบียน</h2>
-      </div>
+      </div-->
       <!--form id="register-form">
        <div class="mb-6"><label for="register-username" class="block text-sm font-semibold mb-3" style="color: #475569;">ชื่อผู้ใช้</label> <input type="text" id="register-username" required class="w-full px-4 py-3 rounded-xl border-2 focus:outline-none transition-colors" style="border-color: #e2e8f0; background: #f8fafc;" placeholder="กรอกชื่อผู้ใช้"></div>
        <div class="mb-6"><label class="block text-sm font-semibold mb-3" style="color: #475569;">ตั้งรหัส PIN (4 หลัก)</label>
@@ -218,7 +219,7 @@
     // CONFIGURATION
     // ============================================
     // ใส่ URL ที่นี่ หรือปล่อยว่างไว้เพื่อกรอกผ่านหน้าเว็บ
-    let GOOGLE_SCRIPT_URL = ''; 
+    let GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Qyh5DgGFa1-2ntTTASWnCHAfLoRvKs3-k5ZWM-drHHMK9YCZsFdCgNZRaZzk3HE/exec'; 
     // ============================================
 
     let allData = [];
